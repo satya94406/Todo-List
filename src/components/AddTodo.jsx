@@ -53,13 +53,13 @@ function AddTodo() {
             onChange={(e) => setTodoPriority(e.target.value)}
             className="w-full text-lg p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors"
           >
-            <option value="High">🔥 High</option>
-            <option value="Medium">⚡ Medium</option>
-            <option value="Low">✅ Low</option>
+            <option value="High" >🔴 High</option>
+            <option value="Medium" >🟡 Medium</option>
+            <option value="Low">🟢 Low</option>
           </select>
         </div>
 
-        <div className="w-full md:w-1/3 mt-4">
+        <div className="w-full md:w-1/3 mt-4 lg:mt-8">
           <button
             type="button"
             onClick={handleAddTodo}

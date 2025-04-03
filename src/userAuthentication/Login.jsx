@@ -1,81 +1,64 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { auth } from "../components/Firebase";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isSignup, setIsSignup] = useState(false);
   const [error, setError] = useState("");
-
-  const validateName = (name) => {
-    return /^[A-Za-z\s]+$/.test(name) && name.trim().length > 0;
+  const navigate = useNavigate();
+ 
+  const handleSignup = async () => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      navigate("/Todo-List/todo"); 
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
-  const validateEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-
-    if (!validateName(name)) {
-      setError("Invalid name. Use only letters and spaces.");
-      return;
+  const handleSignin = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log("User Signed In Successfully");
+      navigate("/Todo-List/todo"); 
+    } catch (error) {
+      setError(error.message);
     }
-    if (!validateEmail(email)) {
-      setError("Invalid email format.");
-      return;
-    }
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters long.");
-      return;
-    }
-
-    setError(""); 
-    navigate("/Todo-App/todo");
   };
 
   return (
-    <div>
-      <form className="w-4/5 md:w-96 mx-auto m-8 relative bg-gray-900 top-28 p-4 rounded-3xl opacity-90">
-        <h1 className="font-bold text-white p-4 text-3xl lg:text-4xl">Sign In</h1>
-
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-6 rounded-lg shadow-md w-96">
+        <h2 className="text-2xl font-bold mb-4">{isSignup ? "Sign Up" : "Sign In"}</h2>
+        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
         <input
-          type="text"
-          placeholder="Name"
-          className="w-[95%] p-2 m-2 rounded-md bg-gray-100"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="text"
+          type="email"
           placeholder="Email"
-          className="w-[95%] p-2 m-2 rounded-md bg-gray-100"
-          value={email}
+          className="w-full px-3 py-2 border rounded-md mb-2"
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="password"
           placeholder="Password"
-          className="w-[95%] p-2 m-2 rounded-md bg-gray-100"
-          value={password}
+          className="w-full px-3 py-2 border rounded-md mb-4"
           onChange={(e) => setPassword(e.target.value)}
         />
-
-        {error && <p className="px-2 m-2 text-red-600 text-sm">{error}</p>}
-
         <button
-          onClick={handleLogin}
-          className="w-[95%] text-lg p-2 m-2 rounded-md bg-rose-600 text-white"
+          onClick={isSignup ? handleSignup : handleSignin}
+          className="w-full bg-blue-500 cursor-pointer text-white py-2 rounded-md"
         >
-          Login
+          {isSignup ? "Sign Up" : "Sign In"}
         </button>
-
-        <button className="text-slate-50 m-2 font-semibold text-lg cursor-pointer">
-          New to Todo App? Sign up now
-        </button>
-      </form>
+        <p
+          className="mt-4 text-blue-600 cursor-pointer text-center"
+          onClick={() => setIsSignup(!isSignup)}
+        >
+          {isSignup ? "Already have an account? Sign In" : "Don't have an account? Sign Up"}
+        </p>
+      </div>
     </div>
   );
 };

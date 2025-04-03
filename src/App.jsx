@@ -26,8 +26,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/Todo-App" element={<Login />} />
-        <Route path="/Todo-App/todo" element={<TodoPage />} />
+        <Route path="/Todo-List" element={<Login />} />
+        <Route path="/Todo-List/todo" element={<TodoPage />} />
       </Routes>
     </Router>
   );
