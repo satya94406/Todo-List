@@ -13,7 +13,7 @@ const Login = () => {
   const handleSignup = async () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/Todo-List/todo"); 
+      navigate("todo"); 
     } catch (error) {
       setError(error.message);
     }
@@ -23,7 +23,7 @@ const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       console.log("User Signed In Successfully");
-      navigate("/Todo-List/todo"); 
+      navigate("/todo"); 
     } catch (error) {
       setError(error.message);
     }
