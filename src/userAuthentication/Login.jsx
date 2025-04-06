@@ -23,7 +23,7 @@ const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       console.log("User Signed In Successfully");
-      navigate("/todo"); 
+      navigate("todo"); 
     } catch (error) {
       setError(error.message);
     }

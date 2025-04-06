@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://satya94406.github.io/Todo-List",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

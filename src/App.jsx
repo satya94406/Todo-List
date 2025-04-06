@@ -24,7 +24,7 @@ function TodoPage() {
 
 function App() {
   return (
-    <Router basename="/Todo-List">
+    <Router >
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/todo" element={<TodoPage />} />
